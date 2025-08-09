@@ -24,12 +24,20 @@ function findSlangById(slangId) {
 // ===== SLANG DATA LOADING =====
 async function loadSlangs() {
     try {
+        console.log('Loading slangs from data/slangs.json...');
         const response = await fetch('data/slangs.json');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         allSlangs = await response.json();
+        console.log('Successfully loaded', allSlangs.length, 'slangs');
         filteredSlangs = [...allSlangs];
         
         // Initialize page-specific functionality
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        console.log('Current page:', currentPage);
         
         switch (currentPage) {
             case 'index.html':
@@ -41,13 +49,39 @@ async function loadSlangs() {
             case 'submit.html':
                 initSubmitPage();
                 break;
+            default:
+                // Handle cases where filename might be empty or different
+                if (window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+                    initHomePage();
+                } else {
+                    console.log('Unknown page, initializing home page');
+                    initHomePage();
+                }
+                break;
         }
     } catch (error) {
         console.error('Error loading slangs:', error);
+        console.log('Using fallback data...');
         // Fallback data for demo purposes
         allSlangs = getFallbackSlangs();
         filteredSlangs = [...allSlangs];
-        initHomePage();
+        
+        // Still try to initialize the correct page
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        switch (currentPage) {
+            case 'index.html':
+                initHomePage();
+                break;
+            case 'dictionary.html':
+                initDictionaryPage();
+                break;
+            case 'submit.html':
+                initSubmitPage();
+                break;
+            default:
+                initHomePage();
+                break;
+        }
     }
 }
 
@@ -514,10 +548,47 @@ function showNotification(message) {
     }, 3000);
 }
 
+// ===== MOBILE MENU FUNCTIONALITY =====
+function initMobileMenu() {
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const mobileControls = document.querySelector('.mobile-controls');
+    
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener('click', function() {
+            // Toggle mobile menu
+            mobileMenuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on links
+        navLinks.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                mobileMenuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const isClickInsideControls = mobileControls && mobileControls.contains(e.target);
+            const isClickInsideNav = navLinks.contains(e.target);
+            
+            if (!isClickInsideControls && !isClickInsideNav) {
+                mobileMenuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+}
+
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize dark mode
     initDarkMode();
+    
+    // Initialize mobile menu
+    initMobileMenu();
     
     // Load slangs data
     loadSlangs();
@@ -536,6 +607,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// ===== DARK MODE FUNCTIONALITY =====
+function initDarkMode() {
+    // Check for saved dark mode preference or default to light mode
+    const darkMode = localStorage.getItem('darkMode') || 'false';
+    const isDarkMode = darkMode === 'true';
+    
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+    
+    // Create and add dark mode toggle button to navigation
+    const nav = document.querySelector('.nav');
+    const mobileControls = document.querySelector('.mobile-controls');
+    
+    if (nav && !document.querySelector('.dark-mode-toggle')) {
+        const darkModeToggle = document.createElement('button');
+        darkModeToggle.className = 'dark-mode-toggle';
+        darkModeToggle.innerHTML = `<span class="toggle-icon">${isDarkMode ? '☀️' : '🌙'}</span>`;
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        
+        // Add toggle button to mobile controls if they exist, otherwise to nav
+        if (mobileControls) {
+            mobileControls.appendChild(darkModeToggle);
+        } else {
+            nav.appendChild(darkModeToggle);
+        }
+    }
+}
+
+function toggleDarkMode() {
+    const body = document.body;
+    const toggle = document.querySelector('.dark-mode-toggle .toggle-icon');
+    
+    body.classList.toggle('dark-mode');
+    const isDarkMode = body.classList.contains('dark-mode');
+    
+    // Update icon
+    if (toggle) {
+        toggle.textContent = isDarkMode ? '☀️' : '🌙';
+    }
+    
+    // Save preference
+    localStorage.setItem('darkMode', isDarkMode.toString());
+}
 
 // ===== EXPORT FUNCTIONS FOR GLOBAL ACCESS =====
 window.playSlangAudioFromCard = playSlangAudioFromCard;
