@@ -552,7 +552,6 @@ function showNotification(message) {
 function initMobileMenu() {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const mobileControls = document.querySelector('.mobile-controls');
     
     if (mobileMenuToggle && navLinks) {
         mobileMenuToggle.addEventListener('click', function() {
@@ -571,10 +570,10 @@ function initMobileMenu() {
         
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
-            const isClickInsideControls = mobileControls && mobileControls.contains(e.target);
+            const isClickInsideToggle = mobileMenuToggle.contains(e.target);
             const isClickInsideNav = navLinks.contains(e.target);
             
-            if (!isClickInsideControls && !isClickInsideNav) {
+            if (!isClickInsideToggle && !isClickInsideNav) {
                 mobileMenuToggle.classList.remove('active');
                 navLinks.classList.remove('active');
             }
@@ -584,9 +583,6 @@ function initMobileMenu() {
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize dark mode
-    initDarkMode();
-    
     // Initialize mobile menu
     initMobileMenu();
     
@@ -607,51 +603,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-// ===== DARK MODE FUNCTIONALITY =====
-function initDarkMode() {
-    // Check for saved dark mode preference or default to light mode
-    const darkMode = localStorage.getItem('darkMode') || 'false';
-    const isDarkMode = darkMode === 'true';
-    
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-    }
-    
-    // Create and add dark mode toggle button to navigation
-    const nav = document.querySelector('.nav');
-    const mobileControls = document.querySelector('.mobile-controls');
-    
-    if (nav && !document.querySelector('.dark-mode-toggle')) {
-        const darkModeToggle = document.createElement('button');
-        darkModeToggle.className = 'dark-mode-toggle';
-        darkModeToggle.innerHTML = `<span class="toggle-icon">${isDarkMode ? '☀️' : '🌙'}</span>`;
-        darkModeToggle.addEventListener('click', toggleDarkMode);
-        
-        // Add toggle button to mobile controls if they exist, otherwise to nav
-        if (mobileControls) {
-            mobileControls.appendChild(darkModeToggle);
-        } else {
-            nav.appendChild(darkModeToggle);
-        }
-    }
-}
-
-function toggleDarkMode() {
-    const body = document.body;
-    const toggle = document.querySelector('.dark-mode-toggle .toggle-icon');
-    
-    body.classList.toggle('dark-mode');
-    const isDarkMode = body.classList.contains('dark-mode');
-    
-    // Update icon
-    if (toggle) {
-        toggle.textContent = isDarkMode ? '☀️' : '🌙';
-    }
-    
-    // Save preference
-    localStorage.setItem('darkMode', isDarkMode.toString());
-}
 
 // ===== EXPORT FUNCTIONS FOR GLOBAL ACCESS =====
 window.playSlangAudioFromCard = playSlangAudioFromCard;
