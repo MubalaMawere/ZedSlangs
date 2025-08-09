@@ -117,7 +117,7 @@ function getFallbackSlangs() {
             "example_native": "Abo balibe plan, bango zunguluka mu town che ai.",
             "example_translation": "Those guys have no direction, they are just moving around town .",
             "audio": "balibeplan.mp3"
-        }
+        },
         {
             "word": "Paipa pano",
             "language": "Nyanja",
