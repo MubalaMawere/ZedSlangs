@@ -3,50 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zed Slangs Dictionary | Home</title>
+    <title>Zed Slangs Dictionary - Discover Zambian Culture</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="assets/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <header>
+    <header class="header">
         <div class="container">
-            <h1><a href="index.html" class="logo-text">Zed Slangs Dictionary</a></h1>
+            <nav class="nav">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="assets/logo.png" alt="Zed Slangs Dictionary Logo" class="logo-img">
+                        <span class="logo-text">Zed Slangs</span>
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="active">Home</a>
+                    <a href="dictionary.html">Dictionary</a>
+                    <a href="submit.html">Submit</a>
+                    <a href="about.html">About</a>
+                </div>
+
+            </nav>
         </div>
     </header>
 
-    <main class="container">
+    <main class="main">
         <section class="hero">
-            <h2>Discover Zambian Slang</h2>
-            <p>Learn the vibrant language of Zambia's streets with our growing dictionary of Bemba, Nyanja, and Tonga slangs.</p>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Discover Zambian Culture Through Slangs</h1>
+                    <p class="hero-subtitle">
+                        Explore the rich linguistic heritage of Zambia with slangs from Bemba, Nyanja, and Tonga languages. 
+                        Learn, share, and celebrate our cultural expressions.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="dictionary.html" class="btn btn-primary">Open Dictionary</a>
+                        <a href="about.html" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="slang-of-day">
-            <h3>Slang of the Day</h3>
-            <div class="slang-card" id="daily-slang">
-                <!-- Dynamically loaded from JSON -->
+            <div class="container">
+                <h2 class="section-title">🌟 Slang of the Day</h2>
+                <div class="slang-card featured" id="slangOfDay">
+                    <div class="slang-content">
+                        <div class="slang-header">
+                            <h3 class="slang-word" id="slangWord">Loading...</h3>
+                            <span class="language-badge" id="slangLanguage">Bemba</span>
+                        </div>
+                        <p class="slang-meaning" id="slangMeaning">Discovering today's slang...</p>
+                        <div class="slang-example">
+                            <p class="example-native" id="slangExampleNative"></p>
+                            <p class="example-translation" id="slangExampleTranslation"></p>
+                        </div>
+                        <div class="slang-actions">
+                            <button class="btn btn-audio" id="playSlangAudio">
+                                🔊 Play Audio
+                            </button>
+                            <button class="btn btn-favorite" id="favoriteSlang">
+                                ❤️ Add to Favorites
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="language-preview">
-            <h3>Explore by Language</h3>
-            <div class="language-buttons">
-                <button class="language-btn" data-lang="bemba">Bemba</button>
-                <button class="language-btn" data-lang="nyanja">Nyanja</button>
-                <button class="language-btn" data-lang="tonga">Tonga</button>
+            <div class="container">
+                <h2 class="section-title">Explore Languages</h2>
+                <div class="language-grid">
+                    <div class="language-card" data-language="Bemba">
+                        <div class="language-icon">🇿🇲</div>
+                        <h3>Bemba</h3>
+                        <p>The most widely spoken language in Zambia, rich with cultural expressions and modern slangs.</p>
+                        <a href="dictionary.html?lang=bemba" class="btn btn-outline">Explore Bemba</a>
+                    </div>
+                    <div class="language-card" data-language="Nyanja">
+                        <div class="language-icon">🇿🇲</div>
+                        <h3>Nyanja</h3>
+                        <p>Spoken in Lusaka and surrounding areas, featuring vibrant urban slangs and expressions.</p>
+                        <a href="dictionary.html?lang=nyanja" class="btn btn-outline">Explore Nyanja</a>
+                    </div>
+                    <div class="language-card" data-language="Tonga">
+                        <div class="language-icon">🇿🇲</div>
+                        <h3>Tonga</h3>
+                        <p>Southern Zambia's cultural language, preserving traditional wisdom in modern slangs.</p>
+                        <a href="dictionary.html?lang=tonga" class="btn btn-outline">Explore Tonga</a>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <a href="dictionary.html" class="cta-button">Open Full Dictionary</a>
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Why Zed Slangs?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎧</div>
+                        <h3>Audio Learning</h3>
+                        <p>Listen to authentic pronunciations and example sentences</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">❤️</div>
+                        <h3>Save Favorites</h3>
+                        <p>Build your personal collection of favorite slangs</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Smart Search</h3>
+                        <p>Find exactly what you're looking for with instant search</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Perfect experience on all devices</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer>
+    <footer class="footer">
         <div class="container">
-            <p>© 2025 Zed Slangs Dictionary | Celebrating Zambian Culture</p>
+            <p>&copy; 2025 Zed Slangs Dictionary. Celebrating Zambian culture through language.</p>
         </div>
     </footer>
 
-    <script src="js/utils.js"></script>
     <script src="js/script.js"></script>
 </body>
-</html>
+</html> 
