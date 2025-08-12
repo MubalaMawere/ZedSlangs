@@ -602,8 +602,126 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Entrance animation for hero section
+    document.querySelector('.hero-content').style.opacity = '1';
+    document.querySelector('.hero-content').style.transform = 'translateY(0)';
+    
+    // Animate Slang of the Day heading (letter-by-letter)
+    const slangTitle = document.querySelector('.slang-animate');
+    if (slangTitle) {
+        const text = slangTitle.textContent;
+        slangTitle.textContent = '';
+        [...text].forEach((char, i) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.opacity = '0';
+            span.style.display = 'inline-block';
+            span.style.transition = 'opacity 0.18s ' + (i * 0.06) + 's';
+            slangTitle.appendChild(span);
+            setTimeout(() => { span.style.opacity = '1'; }, 100 + i * 60);
+        });
+    }
+    
+    // Only animate soundwave when Play Audio is clicked
+    const playBtn = document.getElementById('playSlangAudio');
+    const soundwave = document.getElementById('soundwave');
+    if (playBtn && soundwave) {
+        // Create soundwave bars
+        soundwave.innerHTML = '<span></span><span></span><span></span><span></span>';
+        // Hide bars by default
+        soundwave.style.visibility = 'hidden';
+
+        playBtn.addEventListener('click', function () {
+            soundwave.style.visibility = 'visible';
+            soundwave.classList.add('playing');
+            setTimeout(function () {
+                soundwave.classList.remove('playing');
+                soundwave.style.visibility = 'hidden';
+            }, 1200); // Duration of animation
+        });
+    }
+    
+    // Fade-in for example sentences
+    function fadeInExamples() {
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '1';
+        });
+    }
+    fadeInExamples();
+    
+    // Animated typing and deleting effect for #slang-animate
+    const el = document.getElementById("slang-animate");
+    if (!el) return;
+    const text = "🌟 Slang of the Day";
+    let idx = 0;
+    let typing = true;
+
+    function animate() {
+        if (typing) {
+            idx++;
+            if (idx > text.length) {
+                typing = false;
+                setTimeout(animate, 900);
+                return;
+            }
+        } else {
+            idx--;
+            if (idx < 0) {
+                typing = true;
+                setTimeout(animate, 600);
+                return;
+            }
+        }
+        el.innerHTML = text.slice(0, idx) + '<span class="cursor"></span>';
+        setTimeout(animate, typing ? 90 : 50);
+    }
+    animate();
+    
+    // Apply soundwave animation to all Play Audio buttons
+    document.querySelectorAll('.btn-audio').forEach(function(btn) {
+        const soundwave = btn.querySelector('.soundwave');
+        if (soundwave) {
+            soundwave.innerHTML = '<span></span><span></span><span></span><span></span>';
+            soundwave.style.visibility = 'hidden';
+            btn.addEventListener('click', function () {
+                soundwave.style.visibility = 'visible';
+                btn.classList.add('playing');
+                setTimeout(function () {
+                    btn.classList.remove('playing');
+                    soundwave.style.visibility = 'hidden';
+                }, 1200);
+            });
+        }
+    });
+
+    // Add to Favorites button creative toggle
+    document.querySelectorAll('.btn-favorite').forEach(function(btn) {
+        btn.addEventListener('click', function () {
+            btn.classList.toggle('favorited');
+        });
+    });
 });
 
 // ===== EXPORT FUNCTIONS FOR GLOBAL ACCESS =====
 window.playSlangAudioFromCard = playSlangAudioFromCard;
-window.toggleFavoriteFromCard = toggleFavoriteFromCard; 
+window.toggleFavoriteFromCard = toggleFavoriteFromCard;
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Apply soundwave animation to all Play Audio buttons
+    document.querySelectorAll('.btn-audio').forEach(function(btn) {
+        const soundwave = btn.querySelector('.soundwave');
+        if (soundwave) {
+            soundwave.innerHTML = '<span></span><span></span><span></span><span></span>';
+            soundwave.style.visibility = 'hidden';
+            btn.addEventListener('click', function () {
+                soundwave.style.visibility = 'visible';
+                btn.classList.add('playing');
+                setTimeout(function () {
+                    btn.classList.remove('playing');
+                    soundwave.style.visibility = 'hidden';
+                }, 1200);
+            });
+        }
+    });
+});
